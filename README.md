@@ -1,9 +1,13 @@
 # udemy-apache-kafka
 
+[![wakatime](https://wakatime.com/badge/user/c9dffbdd-c073-4c7d-a529-e105c09c8423/project/80ed9fa2-a4bd-48bc-945f-a6ed8cda782a.svg)](https://wakatime.com/badge/user/c9dffbdd-c073-4c7d-a529-e105c09c8423/project/80ed9fa2-a4bd-48bc-945f-a6ed8cda782a)
 ## This cource
 
 Apache Kafka Series - Learn Apache Kafka for Beginners v2
 * <https://www.udemy.com/course/apache-kafka>
+
+START HERE: Learn Apache Kafka 2.0 Ecosystem, Core Concepts, Real World Java Producers/Consumers & Big Data Architecture
+
 
 ## Environments
 
