@@ -160,3 +160,87 @@ Topic: new_topic        TopicId: 19Ht124tRZu8YqeJ56jHPQ PartitionCount: 1       
 
 ```
 
+change server.properties
+
+```
+# The default number of log partitions per topic. More partitions allow greater
+# parallelism for consumption, but this will also result in more files across
+# the brokers.
+num.partitions=3
+```
+
+run
+
+```
+kafka-console-producer --broker-list 127.0.0.1:9092 --topic new_topic_2
+>Hello new 2 topic
+[2021-11-05 10:57:02,717] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 3 : {new_topic_2=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+[2021-11-05 10:57:02,822] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 4 : {new_topic_2=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+[2021-11-05 10:57:02,931] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 5 : {new_topic_2=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+>^C
+```
+
+describe new_topic_2
+
+```sh
+ kafka-topics --bootstrap-server 127.0.0.1:9092 --topic new_topic_2 --describe
+Topic: new_topic_2      TopicId: UQNwzS5ERBi40YZO7-tmZg PartitionCount: 3       ReplicationFactor: 1    Configs: segment.bytes=1073741824
+        Topic: new_topic_2      Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+        Topic: new_topic_2      Partition: 1    Leader: 0       Replicas: 0     Isr: 0
+        Topic: new_topic_2      Partition: 2    Leader: 0       Replicas: 0     Isr: 0
+```
+
+### Kafka Console Consumer CLI
+
+consumer
+
+run
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic
+hi
+how are you?
+this is a new message
+play play play
+here is another message
+btw really awesoome course
+
+
+```
+
+producer
+
+send message.
+
+
+```sh
+
+kafka-console-producer --bootstrap-server 127.0.0.1:9092 --topic first_topic
+>hi
+>how are you?
+>this is a new message
+>play play play
+>here is another message
+>btw really awesoome course
+>^C
+```
+
+--from-beginning
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning
+awesome course!
+just another message :)
+some message that is acked
+jun learning!
+this is a new message
+here is another message
+lerning Kafka
+hi
+play play play
+Hello Stephane
+just for fun
+how are you?
+btw really awesoome course
+```
+
