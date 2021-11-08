@@ -244,3 +244,174 @@ how are you?
 btw really awesoome course
 ```
 
+
+### Kafka COnsumer Groups
+
+
+3 pattition
+
+```sh
+kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic
+```
+
+2 groups
+
+```
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-group
+hi
+how are you
+a
+c
+d
+2
+4
+6
+1
+c
+3
+5
+how are you.
+fine thank's
+do not distrib
+
+```
+
+same group my-first-group
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-group
+3 pattitions
+b
+1
+3
+5
+8
+2
+4
+```
+
+second group 
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-second-group
+1
+c
+2
+3
+4
+5
+how are you.
+fine thank's
+do not distrib
+```
+
+third group --from-biginning
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-third-group --from-beginning
+awesome course!
+just another message :)
+some message that is acked
+jun learning!
+this is a new message
+here is another message
+hi
+a
+d
+2
+4
+6
+1
+3
+how are you.
+do not distrib
+lerning Kafka
+hi
+play play play
+how are you
+c
+7
+c
+5
+fine thank's
+Hello Stephane
+just for fun
+how are you?
+btw really awesoome course
+3 pattitions
+b
+1
+3
+5
+8
+2
+4
+```
+
+### Kafka Consumer Groups CLI
+
+
+```sh
+kafka-consumer-groups --bootstrap-server 127.0.0.1:9092 --list
+my-first-group
+my-third-group
+my-first-application
+my-second-group
+```
+
+```sh
+kafka-consumer-groups --bootstrap-server 127.0.0.1:9092 --describe --group my-second-group
+
+Consumer group 'my-second-group' has no active members.
+
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+my-second-group first_topic     0          16              16              0               -               -               -
+my-second-group first_topic     1          9               9               0               -               -               -
+my-second-group first_topic     2          12              12              0               -               -               -
+```
+
+### Resetting Offsets
+
+
+option --to-earliest
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-application --reset-offsets --to-earliest --execute --topic first_topic
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET     
+my-first-application           first_topic                    0          0              
+my-first-application           first_topic                    1          0              
+my-first-application           first_topic                    2          0    
+```
+
+option --shift-by
+--shift-by -N
+
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-application --reset-offsets --shift-by -2 --execute --topic first_topic
+[2021-11-08 13:50:09,074] WARN New offset (-2) is lower than earliest offset for topic partition first_topic-0. Value will be set to 0 (kafka.admin.ConsumerGroupCommand$)
+[2021-11-08 13:50:09,075] WARN New offset (-2) is lower than earliest offset for topic partition first_topic-1. Value will be set to 0 (kafka.admin.ConsumerGroupCommand$)
+[2021-11-08 13:50:09,075] WARN New offset (-2) is lower than earliest offset for topic partition first_topic-2. Value will be set to 0 (kafka.admin.ConsumerGroupCommand$)
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET     
+my-first-application           first_topic                    0          0              
+my-first-application           first_topic                    1          0              
+my-first-application           first_topic                    2          0    
+```
+
+### CLI Options that are good to know
+
+The CLI has many options, but here are the others that are most commonly used:
+
+> Producer with Keys
+
+```sh
+kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic --property parse.key=true --property key.separator=,
+> key,value
+> another key,another value
+```
+
+> Consumer with keys
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning --property print.key=true key.separator=,
+```
+
