@@ -346,3 +346,26 @@ b
 2
 4
 ```
+
+### Kafka Consumer Groups CLI
+
+
+```sh
+kafka-consumer-groups --bootstrap-server 127.0.0.1:9092 --list
+my-first-group
+my-third-group
+my-first-application
+my-second-group
+```
+
+```sh
+kafka-consumer-groups --bootstrap-server 127.0.0.1:9092 --describe --group my-second-group
+
+Consumer group 'my-second-group' has no active members.
+
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+my-second-group first_topic     0          16              16              0               -               -               -
+my-second-group first_topic     1          9               9               0               -               -               -
+my-second-group first_topic     2          12              12              0               -               -               -
+```
+
