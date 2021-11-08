@@ -369,3 +369,49 @@ my-second-group first_topic     1          9               9               0    
 my-second-group first_topic     2          12              12              0               -               -               -
 ```
 
+### Resetting Offsets
+
+
+option --to-earliest
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-application --reset-offsets --to-earliest --execute --topic first_topic
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET     
+my-first-application           first_topic                    0          0              
+my-first-application           first_topic                    1          0              
+my-first-application           first_topic                    2          0    
+```
+
+option --shift-by
+--shift-by -N
+
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --group my-first-application --reset-offsets --shift-by -2 --execute --topic first_topic
+[2021-11-08 13:50:09,074] WARN New offset (-2) is lower than earliest offset for topic partition first_topic-0. Value will be set to 0 (kafka.admin.ConsumerGroupCommand$)
+[2021-11-08 13:50:09,075] WARN New offset (-2) is lower than earliest offset for topic partition first_topic-1. Value will be set to 0 (kafka.admin.ConsumerGroupCommand$)
+[2021-11-08 13:50:09,075] WARN New offset (-2) is lower than earliest offset for topic partition first_topic-2. Value will be set to 0 (kafka.admin.ConsumerGroupCommand$)
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET     
+my-first-application           first_topic                    0          0              
+my-first-application           first_topic                    1          0              
+my-first-application           first_topic                    2          0    
+```
+
+### CLI Options that are good to know
+
+The CLI has many options, but here are the others that are most commonly used:
+
+> Producer with Keys
+
+```sh
+kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic --property parse.key=true --property key.separator=,
+> key,value
+> another key,another value
+```
+
+> Consumer with keys
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning --property print.key=true key.separator=,
+```
+
