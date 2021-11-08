@@ -244,3 +244,105 @@ how are you?
 btw really awesoome course
 ```
 
+
+### Kafka COnsumer Groups
+
+
+3 pattition
+
+```sh
+kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic
+```
+
+2 groups
+
+```
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-group
+hi
+how are you
+a
+c
+d
+2
+4
+6
+1
+c
+3
+5
+how are you.
+fine thank's
+do not distrib
+
+```
+
+same group my-first-group
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-group
+3 pattitions
+b
+1
+3
+5
+8
+2
+4
+```
+
+second group 
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-second-group
+1
+c
+2
+3
+4
+5
+how are you.
+fine thank's
+do not distrib
+```
+
+third group --from-biginning
+
+```sh
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-third-group --from-beginning
+awesome course!
+just another message :)
+some message that is acked
+jun learning!
+this is a new message
+here is another message
+hi
+a
+d
+2
+4
+6
+1
+3
+how are you.
+do not distrib
+lerning Kafka
+hi
+play play play
+how are you
+c
+7
+c
+5
+fine thank's
+Hello Stephane
+just for fun
+how are you?
+btw really awesoome course
+3 pattitions
+b
+1
+3
+5
+8
+2
+4
+```
